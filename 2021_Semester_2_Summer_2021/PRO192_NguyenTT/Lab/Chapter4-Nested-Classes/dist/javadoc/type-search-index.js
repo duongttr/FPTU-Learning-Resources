@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"chapter4.nested.classes","l":"Chapter4NestedClasses"},{"p":"chapter4.nested.classes","l":"Unit35"}];updateSearchResults();
