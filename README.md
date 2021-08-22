@@ -24,6 +24,6 @@ Engineering
 
 # 📬 Contact info
 [![Facebook](/images/facebook.png)](https://www.facebook.com/iamjayt.19/)
-[![LinkedIn](/images/linkedin.png)](https://www.facebook.com/iamjayt.19/)
+[![LinkedIn](/images/linkedin.png)](https://www.linkedin.com/in/duonggg/)
 [![Email](/images/email.png)](mailto:duongdayne1909@gmail.com)
 [![GitHub](/images/github.png)](https://github.com/duongttr)
