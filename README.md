@@ -23,7 +23,7 @@ Engineering
 - [**ĐSA102**](/2021_Semester_2_Summer2021/ĐSA102_NamHM2): Traditional musical instrument (Extracurricular)
 
 # 📬 Contact info
-[![Facebook](/images/facebook.png)](https://www.facebook.com/iamjayt.19/)
-[![LinkedIn](/images/linkedin.png)](https://www.linkedin.com/in/duonggg/)
-[![Email](/images/email.png)](mailto:duongdayne1909@gmail.com)
-[![GitHub](/images/github.png)](https://github.com/duongttr)
+[![Facebook](/images/facebook.svg)](https://www.facebook.com/iamjayt.19/)
+[![LinkedIn](/images/linkedin.svg)](https://www.linkedin.com/in/duonggg/)
+[![Email](/images/email.svg)](mailto:duongdayne1909@gmail.com)
+[![GitHub](/images/github.svg)](https://github.com/duongttr)
