@@ -1,22 +1,13 @@
 package Object;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Comparator;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.Vector;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import Utils.Inputter;
-import Utils.TextColor;
-import Utils.Color;
-import Utils.FunctionUI;
 
 public class FoodList extends Vector<Food> {
 
@@ -38,6 +29,15 @@ public class FoodList extends Vector<Food> {
         }
         return null;
     }
+
+    // public FoodList searchByWeight(double weight){
+    //     FoodList ret = new FoodList();
+    //     for(Food food: this){
+    //         if(weight == food.getWeight())
+    //             ret.add(food);
+    //     }
+    //     return ret;
+    // }
 
     public FoodList searchByName(String name) {
         FoodList ret = new FoodList();
@@ -108,130 +108,115 @@ public class FoodList extends Vector<Food> {
         }
     }
 
-    public void saveToFile(String fileNamePath) {
+    public boolean saveToFile(String fileNamePath) {
         try {
             File file = new File(fileNamePath);
-            if (file.exists() && !file.isDirectory()) {
-                if (Inputter.askYN("File is existed, do you want to overwrite? All old data will be lost. (Y/N): ")) {
-                    file.delete();
-                    file.createNewFile();
-                    FileOutputStream fos = new FileOutputStream(file);
-                    ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeObject(this);
-                    oos.flush();
-                    oos.close();
-                    System.out.println(TextColor.create("\n>>SAVED SUCCESSFULLY!\n", Color.GREEN));
-                }
-            } else {
-                file.createNewFile();
-                FileOutputStream fos = new FileOutputStream(file);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(this);
-                oos.flush();
-                oos.close();
-                System.out.println(TextColor.create("\n>>SAVED SUCCESSFULLY!\n", Color.GREEN));
-            }
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(this);
+            oos.flush();
+            oos.close();
 
+            return true;
         } catch (Exception e) {
-
-            System.out.println(TextColor.create("\nError occured, maybe the file is missing or something", Color.RED));
+            return false;
         }
 
     }
 
-    public <T> void loadFromFile(String fileNamePath) {
+    // public <T> void loadFromFile(String fileNamePath) {
 
-        try {
-            File file = new File(fileNamePath);
-            FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(fis);
+    //     try {
+    //         File file = new File(fileNamePath);
+    //         FileInputStream fis = new FileInputStream(file);
+    //         ObjectInputStream ois = new ObjectInputStream(fis);
 
-            FoodList loadedFoodList = (FoodList) ois.readObject();
+    //         FoodList loadedFoodList = (FoodList) ois.readObject();
 
-            boolean yesAllOption = false;
-            boolean noAllOption = false;
-            ois.close();
+    //         boolean yesAllOption = false;
+    //         boolean noAllOption = false;
+    //         ois.close();
 
-            Set<String> setId = this.stream().map(x -> x.getId()).collect(Collectors.toSet());
+    //         Set<String> setId = this.stream().map(x -> x.getId()).collect(Collectors.toSet());
 
-            Set<String> duplicatedId = loadedFoodList.stream().map(x -> x.getId()).filter(x -> setId.contains(x))
-                    .collect(Collectors.toSet());
+    //         Set<String> duplicatedId = loadedFoodList.stream().map(x -> x.getId()).filter(x -> setId.contains(x))
+    //                 .collect(Collectors.toSet());
 
-            for (Food f1 : loadedFoodList) {
-                if (duplicatedId.contains(f1.getId())) {
-                    Food tmp = this.search(f1.getId());
-                    if (!yesAllOption && !noAllOption) {
-                        FoodList tmpList = new FoodList();
-                        tmpList.add(oldNewShower(f1, true));
-                        tmpList.add(oldNewShower(tmp, false));
-                        FunctionUI.showFood(tmpList);
-                        int choice = Inputter.getIntWithCondition(
-                                "There are two duplicate ID <" + f1.getId()
-                                        + ">, do you want to overwrite? [1]: Yes, [2]: No, [3]: Yes All, [4]: No All: ",
-                                true, new Predicate<Integer>() {
+    //         for (Food f1 : loadedFoodList) {
+    //             if (duplicatedId.contains(f1.getId())) {
+    //                 Food tmp = this.search(f1.getId());
+    //                 if (!yesAllOption && !noAllOption) {
+    //                     FoodList tmpList = new FoodList();
+    //                     tmpList.add(oldNewShower(f1, true));
+    //                     tmpList.add(oldNewShower(tmp, false));
+    //                     FunctionUI.showFood(tmpList);
+    //                     int choice = Inputter.getIntWithCondition(
+    //                             "There are two duplicate ID <" + f1.getId()
+    //                                     + ">, do you want to overwrite? [1]: Yes, [2]: No, [3]: Yes All, [4]: No All: ",
+    //                             true, new Predicate<Integer>() {
 
-                                    @Override
-                                    public boolean test(Integer t) {
-                                        if (t >= 1 && t <= 4) {
-                                            return true;
-                                        } else {
-                                            System.out.println("The value must be in range [1,4]");
-                                            return false;
-                                        }
-                                    }
-                                });
+    //                                 @Override
+    //                                 public boolean test(Integer t) {
+    //                                     if (t >= 1 && t <= 4) {
+    //                                         return true;
+    //                                     } else {
+    //                                         System.out.println("The value must be in range [1,4]");
+    //                                         return false;
+    //                                     }
+    //                                 }
+    //                             });
 
-                        switch (choice) {
-                            case 1:
-                                // tmp = f1;
-                                tmp.setId(f1.getId());
-                                tmp.setName(f1.getName());
-                                tmp.setPlace(f1.getPlace());
-                                tmp.setType(f1.getType());
-                                tmp.setWeight(f1.getWeight());
-                                tmp.setExpiredDate(f1.getExpiredDate());
-                                break;
-                            case 2:
-                                break;
-                            case 3:
-                                yesAllOption = true;
-                                break;
-                            case 4:
-                                noAllOption = true;
-                                break;
-                        }
-                    }
-                    if (yesAllOption) {
-                        // tmp = f1;
-                        tmp.setId(f1.getId());
-                        tmp.setName(f1.getName());
-                        tmp.setPlace(f1.getPlace());
-                        tmp.setType(f1.getType());
-                        tmp.setWeight(f1.getWeight());
-                        tmp.setExpiredDate(f1.getExpiredDate());
-                    }
-                } else {
-                    this.add(f1);
-                }
-            }
-            System.out.println(TextColor.create("\n>>LOADED SUCCESSFULLY!\n", Color.GREEN));
-        } catch (Exception e) {
-            System.out.println(TextColor.create("\nError occured, maybe the file is missing or something", Color.RED));
-        }
+    //                     switch (choice) {
+    //                         case 1:
+    //                             // tmp = f1;
+    //                             tmp.setId(f1.getId());
+    //                             tmp.setName(f1.getName());
+    //                             tmp.setPlace(f1.getPlace());
+    //                             tmp.setType(f1.getType());
+    //                             tmp.setWeight(f1.getWeight());
+    //                             tmp.setExpiredDate(f1.getExpiredDate());
+    //                             break;
+    //                         case 2:
+    //                             break;
+    //                         case 3:
+    //                             yesAllOption = true;
+    //                             break;
+    //                         case 4:
+    //                             noAllOption = true;
+    //                             break;
+    //                     }
+    //                 }
+    //                 if (yesAllOption) {
+    //                     // tmp = f1;
+    //                     tmp.setId(f1.getId());
+    //                     tmp.setName(f1.getName());
+    //                     tmp.setPlace(f1.getPlace());
+    //                     tmp.setType(f1.getType());
+    //                     tmp.setWeight(f1.getWeight());
+    //                     tmp.setExpiredDate(f1.getExpiredDate());
+    //                 }
+    //             } else {
+    //                 this.add(f1);
+    //             }
+    //         }
+    //         System.out.println(TextColor.create("\n>>LOADED SUCCESSFULLY!\n", Color.GREEN));
+    //     } catch (Exception e) {
+    //         System.out.println(TextColor.create("\nError occured, maybe the file is missing or something", Color.RED));
+    //     }
 
-    }
+    // }
 
-    private Food oldNewShower(Food food, boolean isNew) {
-        Food tmp;
-        if (isNew) {
-            tmp = new Food(TextColor.create(food.getId() + " (new)", Color.GREEN), food.getName(), food.getWeight(),
-                    food.getType(), food.getPlace(), food.getExpiredDate());
+    // private Food oldNewShower(Food food, boolean isNew) {
+    //     Food tmp;
+    //     if (isNew) {
+    //         tmp = new Food(TextColor.create(food.getId() + " (new)", Color.GREEN), food.getName(), food.getWeight(),
+    //                 food.getType(), food.getPlace(), food.getExpiredDate());
 
-        } else {
-            tmp = new Food(TextColor.create(food.getId() + " (old)", Color.RED), food.getName(), food.getWeight(),
-                    food.getType(), food.getPlace(), food.getExpiredDate());
-        }
+    //     } else {
+    //         tmp = new Food(TextColor.create(food.getId() + " (old)", Color.RED), food.getName(), food.getWeight(),
+    //                 food.getType(), food.getPlace(), food.getExpiredDate());
+    //     }
 
-        return tmp;
-    }
+    //     return tmp;
+    // }
 }
