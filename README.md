@@ -40,10 +40,13 @@ A website for reviewing food around FPTU - 4 members.
 - A project inside [**SSG103**](/2021_Semester_2_Summer2021/SSG103_DuyMA).
 - Using Blogger as backbone.
 
-## Some other useful resources
-1. MAE Cheat Sheet (made by me): https://www.notion.so/Review-Mathematics-a45d2651f9824baeabf5a9cc204cfe2f
-2. Question Bank for Final Exam: https://quizlet.com/class/14745166/
-3. Matrix calculator (really helpful for MAE): http://matrixcalc.org/
+## Some other useful resources & tools
+1. [Question Bank for Final Exam 🔥](https://quizlet.com/class/14745166/)
+2. [MAE Cheat Sheet (made by me)](https://www.notion.so/Review-Mathematics-a45d2651f9824baeabf5a9cc204cfe2f)
+3. [MAD Cheat Sheet (made by me)](https://www.notion.so/MAD-Cheat-Sheet-26f953a449c94a76bea928a04dba938b)
+4. [Matrix calculator](http://matrixcalc.org/)
+5. [ERD Drawing Tool for DBI (supported Relational Model + SQL Converter)](https://erdplus.com/)
+
 
 ## Contact me
 - [Facebook](https://www.facebook.com/duonggg.ne/)
