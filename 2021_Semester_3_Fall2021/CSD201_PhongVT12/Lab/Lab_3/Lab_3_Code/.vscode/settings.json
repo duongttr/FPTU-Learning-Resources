@@ -1,6 +1,6 @@
 {
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
-    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.fontSize": 15,
     "git.decorations.enabled": false
 }
