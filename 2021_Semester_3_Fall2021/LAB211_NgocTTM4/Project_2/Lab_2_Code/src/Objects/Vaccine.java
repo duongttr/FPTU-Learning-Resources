@@ -10,9 +10,10 @@ public class Vaccine {
         this.name = name;
     }
 
-    public int getId() {
+    public int getId(){
         return id;
     }
+
     public String getName() {
         return name;
     }

@@ -2,6 +2,8 @@ package Menu;
 
 import java.util.Vector;
 import java.util.function.Predicate;
+
+import Utils.FunctionUI;
 import Utils.Inputter;
 
 public class Menu extends Vector<MenuItem> {
@@ -14,6 +16,8 @@ public class Menu extends Vector<MenuItem> {
 
     // add new item
     public void run() {
+        FunctionUI.clearScreen();
+        FunctionUI.printREADME("menu.txt");
         //FunctionUI.printREADME("menu.txt");
         //System.out.println("Current opened file: " + TextColor.create(FunctionUI.openedFilePath, Color.PURPLE) + (FunctionUI.needSaveState ? TextColor.create(" (unsaved) ", Color.YELLOW) : ""));
         for (int i = 0; i < this.size(); i++) {

@@ -1,12 +1,13 @@
 package Objects;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Injection {
+public class Injection implements Serializable {
 
     private String id;
     private int firstInjectionPlace;
-    private Date  firstInjectionDate;
+    private Date firstInjectionDate;
     private int secondInjectionPlace;
     private Date secondInjectionDate;
     private String studentID;
@@ -14,6 +15,7 @@ public class Injection {
 
     public static String[] PROVICES = new String[]{
         "AN GIANG",
+        "BÀ RỊA - VŨNG TÀU",
         "BẠC LIÊU",
         "BẮC CẠN",
         "BẮC GIANG",
@@ -28,6 +30,8 @@ public class Injection {
         "CẦN THƠ",
         "ĐÀ NẴNG",
         "DAKLAK",
+        "DAKNONG",
+        "ĐIỆN BIÊN",
         "ĐỒNG NAI",
         "ĐỒNG THÁP",
         "GIA LAI",
@@ -37,6 +41,7 @@ public class Injection {
         "HÀ TĨNH",
         "HẢI DƯƠNG",
         "HẢI PHÒNG",
+        "HẬU GIANG",
         "HÒA BÌNH",
         "HỒ CHÍ MINH",
         "HƯNG YÊN",
@@ -58,6 +63,7 @@ public class Injection {
         "QUẢNG NAM",
         "QUẢNG NGÃI",
         "QUẢNG NINH",
+         "QUẢNG TRỊ",
         "SÓC TRĂNG",
         "SƠN LA",
         "TÂY NINH",
@@ -76,10 +82,12 @@ public class Injection {
     public Injection() {
     }
 
-    
-
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getFirstInjectionPlace() {
@@ -129,6 +137,8 @@ public class Injection {
     public void setVaccineID(int vaccineID) {
         this.vaccineID = vaccineID;
     }
+
+    
 
     
 }

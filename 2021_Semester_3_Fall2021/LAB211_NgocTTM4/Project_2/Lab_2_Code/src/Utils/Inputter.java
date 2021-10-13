@@ -26,7 +26,10 @@ public class Inputter {
         do {
             try {
                 System.out.print(message);
-                int value = Integer.parseInt(sc.nextLine());
+                String val = sc.nextLine().trim();
+                if(val.isEmpty())
+                    return -1;
+                int value = Integer.parseInt(val);
                 return value;
             } catch (Exception ex) {
                 System.out.println(errorString);

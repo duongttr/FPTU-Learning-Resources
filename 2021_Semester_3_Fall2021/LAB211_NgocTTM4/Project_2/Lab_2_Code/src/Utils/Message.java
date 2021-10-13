@@ -5,7 +5,8 @@ public class Message {
     public enum MessageKind{
         WARNING,
         ERROR,
-        SUCCESS
+        SUCCESS,
+        INFORMATION
     }
 
     // warning message, yellow color
@@ -14,7 +15,8 @@ public class Message {
             System.out.println(TextColor.create(message, Color.YELLOW));
         }else if(kind == MessageKind.ERROR){
             System.out.println(TextColor.create(message, Color.RED));
-        }
-        System.out.println(TextColor.create(message, Color.GREEN));
+        }else if(kind == MessageKind.INFORMATION)
+            System.out.println(TextColor.create(message, Color.BLUE));
+        else System.out.println(TextColor.create(message, Color.GREEN));
     }
 }
