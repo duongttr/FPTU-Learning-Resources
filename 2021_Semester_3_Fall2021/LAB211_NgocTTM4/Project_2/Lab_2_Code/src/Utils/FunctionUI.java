@@ -1,9 +1,13 @@
 package Utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
@@ -11,11 +15,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Objects.*;
 import Utils.Message.MessageKind;
 
-public class FunctionUI {
+public class FunctionUI implements Functions {
 
     static String baseDataFolder = "data";
     public static StudentList studentList;
@@ -99,7 +105,8 @@ public class FunctionUI {
         System.out.flush();
     }
 
-    public static void showInfo() {
+    @Override
+    public void showInfo() {
         clearScreen();
         printREADME("show.txt");
         if (il.size() == 0) {
@@ -112,7 +119,8 @@ public class FunctionUI {
         pause();
     }
 
-    public static void addInjection() {
+    @Override
+    public void addInjection() {
         do {
             clearScreen();
             printREADME("add.txt");
@@ -164,8 +172,15 @@ public class FunctionUI {
                 } while (vac == null);
 
                 // input 1st place, date
-                showPlaceInfo();
-                int placeId = Inputter.getIntWithCondition("Input 1st place: ", true, new Predicate<Integer>() {
+                //showPlaceInfo();
+                
+                while(true){
+                String placeStr = Inputter.getString("Input 1st place: ", true, true);
+                if(!suggestionPlace(placeStr)){
+                    Message.show("There's no suggestion, please type again!", MessageKind.WARNING);
+                }else break;
+            }
+                int placeId = Inputter.getIntWithCondition("Input 1st place id: ", true, new Predicate<Integer>() {
 
                     @Override
                     public boolean test(Integer t) {
@@ -215,9 +230,15 @@ public class FunctionUI {
                     break input_vaccine;
                 }
 
-                showPlaceInfo();
-                Message.show("Type 0 if you want to stop inputting", MessageKind.INFORMATION);
-                int placeId2 = Inputter.getIntWithCondition("Input 2nd place: ", true, new Predicate<Integer>() {
+                //showPlaceInfo();
+
+                while(true){
+                    String placeStr = Inputter.getString("Input 2nd place: ", true, true);
+                    if(!suggestionPlace(placeStr)){
+                        Message.show("There's no suggestion, please type again!", MessageKind.WARNING);
+                    }else break;
+                }
+                int placeId2 = Inputter.getIntWithCondition("Input 2nd place id (type 0 for stopping): ", true, new Predicate<Integer>() {
 
                     @Override
                     public boolean test(Integer t) {
@@ -269,7 +290,8 @@ public class FunctionUI {
         } while (Inputter.askYN("Do you want to continue? (Y/N): "));
     }
 
-    public static void updateInjection() {
+    @Override
+    public void updateInjection() {
 
         do {
             clearScreen();
@@ -295,8 +317,13 @@ public class FunctionUI {
                         tmpList.add(inj);
                         tmpList.show();
 
-                        showPlaceInfo();
-                        int placeId2 = Inputter.getIntWithCondition("Input 2nd place: ", true,
+                        while(true){
+                            String placeStr = Inputter.getString("Input 2nd place: ", true, true);
+                            if(!suggestionPlace(placeStr)){
+                                Message.show("There's no suggestion, please type again!", MessageKind.WARNING);
+                            }else break;
+                        }
+                        int placeId2 = Inputter.getIntWithCondition("Input 2nd place id: ", true,
                                 new Predicate<Integer>() {
 
                                     @Override
@@ -365,7 +392,6 @@ public class FunctionUI {
             if (i % 5 == 0) {
                 System.out.println();
             }
-
             System.out.print(String.format("%d. %-" + (25 + (i >= 0 && i <= 8 ? 1 : 0)) + "s", i + 1, p[i]));
 
         }
@@ -399,7 +425,8 @@ public class FunctionUI {
         return c.getTime();
     }
 
-    public static void deleteInjection() {
+    @Override
+    public void deleteInjection() {
 
         do {
             clearScreen();
@@ -426,7 +453,8 @@ public class FunctionUI {
         } while (Inputter.askYN("Do you want to continue? (Y/N): "));
     }
 
-    public static void searchByStudentId() {
+    @Override
+    public void searchByStudentId() {
 
         do {
             clearScreen();
@@ -448,7 +476,35 @@ public class FunctionUI {
         } while (Inputter.askYN("Do you want to continue? (Y/N): "));
     }
 
-    public static void storeToFile() {
+    public void searchByVaccineId() {
+
+        do {
+            clearScreen();
+            printREADME("search.txt");
+            if (il.size() == 0) {
+                Message.show("List is empty", MessageKind.WARNING);
+                pause();
+                return;
+            }
+            int vacId = Inputter.getInt("Input vaccine id: ", true);
+            InjectionList tmpList = new InjectionList();
+            for(Injection inj: il){
+                if(inj.getVaccineID() == vacId){
+                    tmpList.add(inj);
+                }
+            }
+            if(tmpList.size() == 0){
+                Message.show("There is no injection with this vaccine id", MessageKind.WARNING);
+            }else{
+                tmpList.show();
+            }
+        } while (Inputter.askYN("Do you want to continue? (Y/N): "));
+    }
+
+
+
+    @Override
+    public void storeToFile() {
         clearScreen();
         printREADME("save.txt");
         try {
@@ -479,5 +535,59 @@ public class FunctionUI {
         } catch (FileNotFoundException e) {
             System.out.println(TextColor.create("File not found", Color.RED));
         }
+    }
+
+    private boolean suggestionPlace(String s){
+        String[] p = Injection.PROVICES;
+        String input = deAccent(s).toUpperCase();
+        input = input.replaceAll("\\s+", " ").trim();
+        int count = 0;
+        for(int i = 0; i < p.length;i++){
+            String t = deAccent(p[i]).toUpperCase();
+            
+            if(input.matches(t) ||
+            input.replaceAll("\\s+", "").matches(t.replaceAll("\\s+", ""))){
+                System.out.println(String.format("%d. %s", i+1, p[i]));
+                count++;
+                continue;
+            }
+
+            // check every word
+            String[] WORDS = t.split(" ");
+            
+            for(int jj = 0; jj < WORDS.length;jj++){
+                WORDS[jj] = ".*"+WORDS[jj]+".*";
+            }
+            String tmpPattern = String.join("|", WORDS);
+            Pattern r = Pattern.compile(tmpPattern);
+            Matcher m = r.matcher(input);
+            if(m.matches()){
+                count++;
+                System.out.println(String.format("%d. %s", i+1, p[i]));
+                continue;
+            }
+        }
+        return count != 0;
+    }
+
+    private String deAccent(String str) {
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfdNormalizedString).replaceAll("");
+    }
+
+    @Override
+    public void loadFromFile(){
+        File f = new File("injection.dat");
+        try {
+            FileInputStream fis = new FileInputStream(f);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            il = (InjectionList) ois.readObject();
+            ois.close();
+        } catch (ClassNotFoundException | IOException e) {
+            Message.show("An error occured", MessageKind.ERROR);
+            //e.printStackTrace();
+        }
+        
     }
 }

@@ -5,12 +5,15 @@ import Utils.FunctionUI;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        FunctionUI fui = new FunctionUI();
+
+
         Menu menu = new Menu(
             new MenuItem("Show information the injection information", new MenuTask(){
 
                 @Override
                 public void task() {
-                    FunctionUI.showInfo();
+                    fui.showInfo();
                 }
                 
             }),
@@ -18,7 +21,7 @@ public class App {
 
                 @Override
                 public void task() {
-                    FunctionUI.addInjection();
+                    fui.addInjection();
                 }
                 
             }),
@@ -26,7 +29,7 @@ public class App {
 
                 @Override
                 public void task() {
-                    FunctionUI.updateInjection();
+                    fui.updateInjection();
                 }
                 
             }),
@@ -34,7 +37,7 @@ public class App {
 
                 @Override
                 public void task() {
-                    FunctionUI.deleteInjection();
+                    fui.deleteInjection();
                 }
                 
             }),
@@ -43,7 +46,15 @@ public class App {
 
                 @Override
                 public void task() {
-                    FunctionUI.searchByStudentId();
+                    fui.searchByStudentId();
+                }
+                
+            }),
+            new MenuItem("Search injection by vaccineID", new MenuTask(){
+
+                @Override
+                public void task() {
+                    fui.searchByVaccineId();
                 }
                 
             }),
@@ -51,7 +62,7 @@ public class App {
 
                 @Override
                 public void task() {
-                    FunctionUI.storeToFile();
+                    fui.storeToFile();
                 }
                 
             }),
@@ -65,8 +76,9 @@ public class App {
             })
         );
 
+        fui.loadFromFile();
+
         while(true){
-            
             menu.run();
         }
     }
