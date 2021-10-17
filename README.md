@@ -1,9 +1,8 @@
-# FPTU HCMC Learning Resources
-Learning Resources Sharing FPTU campus HCMC
+<h1 align="center">FPTU HCMC Learning Resources</h1>
+<p align="center">📚 Learning Resources Sharing FPTU campus HCMC 📚</p>
 
-## Contents
-> **All resources are for reference purposes only.**
-
+## 📖 Contents
+> **All resources are for reference purposes only. (Still updating)**
 
 ### [Semester 1 - SPRING 2021](/2021_Semester_1_Spring2021)
 |Subject Code|Subject Name|important?|
@@ -11,7 +10,7 @@ Learning Resources Sharing FPTU campus HCMC
 |[**CEA201**](/2021_Semester_1_Spring2021/CEA201_AnNDH)|Computer Organization and Architecture|
 |[**CSI104**](/2021_Semester_1_Spring2021/CSI104_SenB)|Introduction to Computer Science|✅|
 |[**PRF192**](/2021_Semester_1_Spring2021/MAE101_VinhDP)|Programming Fundamentals|✅|
-|[**MAE101**](/2021_Semester_1_Spring2021/PRF192_VanTTN)|Mathematics for Engineering|
+|[**MAE101**](/2021_Semester_1_Spring2021/PRF192_VanTTN)|Mathematics for Engineering|✅|
 |[**SSL101c**](/2021_Semester_1_Spring2021/SSL101c_LanLN7_Coursera)|Academic Skills for University|
 
 ### [Semester 2 - SUMMER 2021](/2021_Semester_2_Summer2021)
@@ -33,14 +32,14 @@ Learning Resources Sharing FPTU campus HCMC
 |[**LAB211**](2021_Semester_3_Fall2021/LAB211_NgocTTM4)|OOP with Java Lab|
 |[**PRP201c**](2021_Semester_3_Fall2021/PRP201c_DinhMH)|Python programming|
 
-## My pet projects
+## 🦉 My pet projects
 ### [**Foodaholic**](http://foodaholic-review.blogspot.com/) 
-A website for reviewing food around FPTU - 4 members.
+A website for reviewing food around FPTU - *4 members*.
 
 - A project inside [**SSG103**](/2021_Semester_2_Summer2021/SSG103_DuyMA).
 - Using Blogger as backbone.
 
-## Some other useful resources & tools
+## ✏️ Other useful resources & tools
 1. [Question Bank for Final Exam 🔥](https://quizlet.com/class/14745166/)
 2. [MAE Cheat Sheet (made by me)](https://www.notion.so/Review-Mathematics-a45d2651f9824baeabf5a9cc204cfe2f)
 3. [MAD Cheat Sheet (made by me)](https://www.notion.so/MAD-Cheat-Sheet-26f953a449c94a76bea928a04dba938b)
@@ -48,7 +47,7 @@ A website for reviewing food around FPTU - 4 members.
 5. [ERD Drawing Tool for DBI (supported Relational Model + SQL Converter)](https://erdplus.com/)
 
 
-## Contact me
+## 📬 Contact me
 - [Facebook](https://www.facebook.com/duonggg.ne/)
 - [LinkedIn](https://www.linkedin.com/in/duonggg/)
 - [Email](mailto:duongdayne1909@gmail.com)
