@@ -3,7 +3,7 @@ CREATE TRIGGER TR_Book_Insert ON BOOK
 INSTEAD OF INSERT
 AS
 BEGIN
-	INSERT INTO BOOK 
+	INSERT INTO BOOK
 		SELECT b.* FROM inserted b
 			INNER JOIN PRODUCT p ON p.PID=b.PID
 		WHERE p.PCategory='book' AND b.PubID <= p.PImportedDate;
@@ -14,7 +14,7 @@ CREATE TRIGGER TR_Stationery_Insert ON STATIONERY
 INSTEAD OF INSERT
 AS
 BEGIN
-	INSERT INTO STATIONERY 
+	INSERT INTO STATIONERY
 		SELECT s.* FROM inserted s
 			INNER JOIN PRODUCT p ON p.PID=s.PID
 		WHERE p.PCategory='stationery';
@@ -88,27 +88,30 @@ END
 GO
 
 -- Adding procedure to update Rank
-CREATE PROCEDURE UpdateUserRank 
-AS
-BEGIN
-		with USERS_profit as
-		(
-		select on_b.UID, sum(pro.PPrice*ib.Amount)as money_u  from in_bill ib 
-		join ONLINE_BILL on_b
-		on ib.BID=on_b.BID 
-		join PRODUCT pro
-		on pro.PID=ib.PID
-		group by on_b.UID)
-		update [USERS]
-		set [USERS].URank=
-		case 
-			when USERS_profit.money_u < 100000 then 'newbie'
-			when (USERS_profit.money_u between 100000 and 500000) then 'brown'
-			when (USERS_profit.money_u between 500000 and 1000000)  then 'silver'
-			when (USERS_profit.money_u between 1000000 and 10000000)  then 'gold'
-			else 'diamond'
-		end
-		from  USERS_profit, USERS
-		WHERE USERS_profit.UID=[USERS].UID;
+CREATE PROCEDURE UpdateUserRank AS BEGIN WITH USERS_profit AS
+  (SELECT u.UID,
+          COALESCE(SUM(pro.PPrice - (CASE
+                                         WHEN pro.PPrice * d.DRate < d.DLimit THEN pro.PPrice * d.DRate
+                                         ELSE d.DLimit
+                                     END) * ib.Amount), 0) AS money_u
+   FROM in_bill ib
+   JOIN ONLINE_BILL on_b ON ib.BID = on_b.BID
+   JOIN PRODUCT pro ON pro.PID = ib.PID
+   JOIN DISCOUNT_PROGRAM d ON d.DID = ib.DID
+   RIGHT JOIN USERS u ON on_b.UID = u.UID
+   GROUP BY u.UID)
+UPDATE [USERS]
+SET [USERS].URank = CASE
+                        WHEN USERS_profit.money_u < 100000
+                             OR USERS_profit.money_u IS NULL THEN 'newbie'
+                        WHEN (USERS_profit.money_u BETWEEN 100000 AND 500000) THEN 'brown'
+                        WHEN (USERS_profit.money_u BETWEEN 500001 AND 1000000) THEN 'silver'
+                        WHEN (USERS_profit.money_u BETWEEN 1000001 AND 10000000) THEN 'gold'
+                        ELSE 'diamond'
+                    END
+FROM USERS_profit,
+     USERS
+WHERE USERS_profit.UID = [USERS].UID;
+
 END
 GO
