@@ -38,6 +38,9 @@
 |[**MAI391**](2022_Semester_4_Spring2022/MAI391_HuynhTT)|Mathematics for Machine Learning|[Video](https://www.youtube.com/playlist?list=PL9gxqL8h2eMoA0vPPkSMDse6LWDCd3eDt)|
 |[**MAS291**](2022_Semester_4_Spring2022/MAS291_TienNV55)|Probability & statistics|
 |[**JPD123**](2022_Semester_4_Spring2022/JPD123_KieuTA)|Japanese Elementary 1-A1.2|[Video](https://www.youtube.com/playlist?list=PL9gxqL8h2eMp0BsjniAPUE3F23MONAG8d)|
+|[**MAI391**](2022_Semester_4_Spring2022/MAI391_HuynhTT)|Mathematics for Machine Learning||
+|[**MAS291**](2022_Semester_4_Spring2022/MAS291_TienNV55)|Probability & statistics|
+|[**JPD123**](2022_Semester_4_Spring2022/JPD123_KieuTA)|Japanese Elementary 1-A1.2|
 |[**IOT102**]()|Internet of Things|
 |[**AIG201c**]()|Artificial Intelligence Coursera|
 
