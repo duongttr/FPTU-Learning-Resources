@@ -17,8 +17,7 @@ def solve(n, board, cc, cd1, cd2, i):
                 cd2[i-j+n-1] = True
                 X[i] = -1
     else:
-        global count
-        count += 1
+        print(X)
         # for i in range(n):
         #     s = ['_'] * n
         #     s[X[i]] = 'X'

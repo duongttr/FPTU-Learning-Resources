@@ -297,5 +297,6 @@ myData = [
 [40.4454368,-3.7299424, 'Av. Séneca, 2, 28040 Madrid, Spain'],
 [38.28923,21.785369, 'Panepistimioupoli Patron 265 04, Greece'],
 [45.406766,11.8774462, 'Via VIII Febbraio, 2, 35122 Padova PD, Italy'],
-[10.5215836,105.1258955, 'An Giang Province, Vietnam']
+[10.5215836,105.1258955, 'An Giang Province, Vietnam'],
+[10.5607168,106.6497623, 'Long An, Cần Đước District, Long An Province, Vietnam']
 ];

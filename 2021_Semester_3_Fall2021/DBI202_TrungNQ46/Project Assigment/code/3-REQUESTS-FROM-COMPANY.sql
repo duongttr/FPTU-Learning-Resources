@@ -2,30 +2,25 @@
 
 SELECT TOP 100 pro.PID,
            pro.PName,
-           pro.PCategory,
-           sum(ib.Amount)*avg(pro.PPrice) AS ProductRevenue
+           sum(ib.Amount) AS ProductAmount
 FROM IN_BILL ib
-JOIN PRODUCT pro ON ib.PID=pro.PID
+JOIN PRODUCT pro ON ib.PID = pro.PID
 GROUP BY pro.PID,
-         pro.PName,
-         pro.PCategory
-ORDER BY ProductRevenue DESC;
-
+         pro.PName
+ORDER BY ProductAmount DESC;
 -- TOP 100 Users which Buy the most
 
-SELECT TOP 100 on_b.UID,
-           (u.UFirstName + ' ' + u.UMiddleName +' '+ u.ULastName) AS FullName,
-           u.UPhone,
-           sum(pro.PPrice*ib.Amount) AS Profit
-FROM in_bill ib
-JOIN ONLINE_BILL on_b ON ib.BID=on_b.BID
-JOIN PRODUCT pro ON pro.PID=ib.PID
-JOIN USERS u ON u.UID = on_b.UID
-GROUP BY on_b.UID,
-         u.UFirstName,
-         u.UMiddleName,
-         u.ULastName,
-         u.UPhone
+SELECT TOP 100 u.UID,
+           COALESCE(SUM(pro.PPrice - (CASE
+                                          WHEN pro.PPrice * d.DRate < d.DLimit THEN pro.PPrice * d.DRate
+                                          ELSE d.DLimit
+                                      END) * ib.Amount), 0) AS Profit
+FROM IN_BILL ib
+JOIN ONLINE_BILL on_b ON ib.BID = on_b.BID
+JOIN PRODUCT pro ON pro.PID = ib.PID
+JOIN DISCOUNT_PROGRAM d ON d.DID = ib.DID
+RIGHT JOIN USERS u ON u.UID = on_b.UID
+GROUP BY u.UID
 ORDER BY Profit DESC;
 
 -- TOP 10 Authors which have Books in Bestsellers
